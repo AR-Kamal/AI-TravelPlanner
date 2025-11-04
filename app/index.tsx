@@ -1,15 +1,22 @@
 import { Text, View } from "react-native";
+import Login from "./../componenets/Login";
+import { auth } from "./../configs/FirebaseConfig"
+import { Redirect } from "expo-router";
 
 export default function Index() {
+
+  const user=auth.currentUser;
+  
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      {user?
+        <Redirect href={'/mytrip'}/>:
+        <Login/>
+      }
     </View>
   );
 }
