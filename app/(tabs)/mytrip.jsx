@@ -23,7 +23,7 @@ export default function MyTrip() {
         <Text style={{
           fontFamily:'outfit-bold',
           fontSize:35
-        }}>MyTrip</Text>
+        }}>My Trip</Text>
         <Ionicons name="add-circle" size={50} color="black" />
       </View>
 
