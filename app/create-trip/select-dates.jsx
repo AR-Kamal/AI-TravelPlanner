@@ -1,4 +1,4 @@
-import { useNavigation } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 import moment from 'moment';
 import { useContext, useEffect, useState } from 'react';
 import { Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
@@ -11,7 +11,8 @@ export default function SelectDates() {
     const navigation=useNavigation();
     const [startDate,setStartDate]=useState();
     const [endDate,setEndDate]=useState();
-    const {tripData,setTripData}=useContext(CreateTripContext)
+    const {tripData,setTripData}=useContext(CreateTripContext);
+    const router=useRouter();
 
     useEffect(()=>{
         navigation.setOptions=({
@@ -48,7 +49,7 @@ export default function SelectDates() {
         const totalNoOfDays = endDate.diff(startDate, 'days');
         console.log('Total days selected:', totalNoOfDays+1);
 
-        ToastAndroid.show(`Trip duration: ${totalNoOfDays+1} day(s)`, ToastAndroid.SHORT);
+        ToastAndroid.show(`Trip duration: ${totalNoOfDays} day(s)`, ToastAndroid.SHORT);
 
         setTripData({
             ...tripData,
@@ -56,6 +57,9 @@ export default function SelectDates() {
             endDate:endDate,
             totalNoOfDays:totalNoOfDays+1
         });
+
+        router.push('/create-trip/select-budget')
+
     };
 
   return (
