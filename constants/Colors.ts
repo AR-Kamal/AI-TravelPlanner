@@ -12,6 +12,7 @@ export const Colors = {
   WHITE: '#fff',
   PEIMARY: '#000',
   GRAY: '#7d7d7d',
+  LIGHT_GRAY: '#f2f2f2',
   light: {
     text: '#11181C',
     background: '#fff',

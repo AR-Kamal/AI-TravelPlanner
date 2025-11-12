@@ -1,41 +1,65 @@
-import { useNavigation } from 'expo-router';
-import { useEffect } from 'react';
+import { useNavigation, useRouter } from 'expo-router';
+import { useContext, useEffect } from 'react';
 import { View } from 'react-native';
 import 'react-native-get-random-values';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { Colors } from '../../constants/Colors';
+import { CreateTripContext } from './../../context/CreateTripContext'
 
 export default function SearchPlace() {
 
     const navigation=useNavigation();
-
+    const {tripData,setTripData}=useContext(CreateTripContext);
+    const router=useRouter();
     useEffect(()=>{
         navigation.setOptions({
             headerShown:true,
             headerTransparent:true,
             headerTitle:'Search'
         })
-    }, [])
+    }, []);
+
+    useEffect(()=>{
+      console.log(tripData)
+    }),[tripData]
 
   return (
     <View style={{
         padding:25,
         paddingTop:75,
         backgroundColor:Colors.WHITE,
-        height:'100%'
+        height:'100%',
+        borderColor:Colors.PEIMARY
     }}>
+
     <GooglePlacesAutocomplete
-      placeholder='Search'
+      placeholder='Search Place'
       onPress={(data, details = null) => {
         // 'details' is provided when fetchDetails = true
-        console.log(data, details);
+       // console.log(data, details);
+        /* console.log(data.description);
+        console.log(details?.geometry.location);
+        console.log(details?.photos[0]?.photo_reference);
+        console.log(details?.url); */
+        setTripData({
+          locationInfo:{
+            name:data.description,
+            coordinates:details?.geometry.location,
+            photoRef:details?.photos[0]?.photo_reference,
+            url:details?.url,
+
+          }
+        });
+
+        router.push('/create-trip/select-traveler')
       }}
       query={{
         key: process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY,
         language: 'en',
         components: 'country:my'
       }}
-              // All other default props explicitly defined
+      
+        // All other default props explicitly defined
         autoFillOnNotFound={false}
         currentLocation={false}
         currentLocationLabel="Current location"
@@ -66,7 +90,13 @@ export default function SearchPlace() {
         }
         predefinedPlaces={[]}
         predefinedPlacesAlwaysVisible={false}
-        styles={{}}
+        styles={{
+          textInputContainer:{
+            borderWidth:1,
+            borderRadius:5,
+            marginTop:25
+          }
+        }}
         suppressDefaultStyles={false}
         textInputHide={false}
         textInputProps={{}}
