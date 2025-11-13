@@ -15,12 +15,12 @@ export default function SelectDates() {
     const router=useRouter();
 
     useEffect(()=>{
-        navigation.setOptions=({
+        navigation.setOptions({
             headerShown:true,
             headerTransparent:true,
-            headerTitle:'',
-        });
-    },[]);
+            headerTitle:''
+        })
+    }, [])
 
     
     const onDateChange = (date, type) => {
@@ -49,7 +49,7 @@ export default function SelectDates() {
         const totalNoOfDays = endDate.diff(startDate, 'days');
         console.log('Total days selected:', totalNoOfDays+1);
 
-        ToastAndroid.show(`Trip duration: ${totalNoOfDays} day(s)`, ToastAndroid.SHORT);
+        ToastAndroid.show(`Trip duration: ${totalNoOfDays + 1} day(s)`, ToastAndroid.SHORT);
 
         setTripData({
             ...tripData,
@@ -93,7 +93,7 @@ export default function SelectDates() {
         <TouchableOpacity 
         onPress={OnDateSelectionContinue}
         style={{
-        padding:20,
+        padding:15,
         backgroundColor:Colors.PEIMARY,
         borderRadius:15,
         marginTop:35}}>

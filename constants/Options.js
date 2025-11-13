@@ -44,14 +44,14 @@ export const SelectBudgetOptions=[
     },
     {
         id:3,
-        title:'Couple',
+        title:'Moderate',
         desc:'Keep the costs on the average',
         icon:'',
 
     },
     {
         id:4,
-        title:'Family',
+        title:'Luxury',
         desc:'Not worrying about the cost',
         icon:'',
 

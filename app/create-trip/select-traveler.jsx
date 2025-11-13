@@ -62,7 +62,7 @@ export default function SelectTraveler() {
             }}>
                 <OptionCard 
                     option={item}
-                    selectedTraveler={selectedTraveler}
+                    selectedOption={selectedTraveler}
                 
                 />
             </TouchableOpacity>
@@ -70,7 +70,7 @@ export default function SelectTraveler() {
       />
       </View>
         <TouchableOpacity style={{
-        padding:20,
+        padding:15,
         backgroundColor:Colors.PEIMARY,
         borderRadius:15,
         marginTop:20}}>
