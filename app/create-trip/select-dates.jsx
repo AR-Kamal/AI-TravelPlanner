@@ -49,8 +49,6 @@ export default function SelectDates() {
         const totalNoOfDays = endDate.diff(startDate, 'days');
         console.log('Total days selected:', totalNoOfDays+1);
 
-        ToastAndroid.show(`Trip duration: ${totalNoOfDays + 1} day(s)`, ToastAndroid.SHORT);
-
         setTripData({
             ...tripData,
             startDate:startDate,

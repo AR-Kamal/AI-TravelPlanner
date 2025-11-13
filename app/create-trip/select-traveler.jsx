@@ -11,6 +11,7 @@ export default function SelectTraveler() {
 
     const navigation=useNavigation();
     const [selectedTraveler,setSelectedTraveler]=useState();
+    //const [selectedOption,setSelectedOption]=useState();
     const {tripData,setTripData}=useContext(CreateTripContext);
     const router=useRouter();
 
@@ -26,7 +27,7 @@ export default function SelectTraveler() {
     useEffect(()=>{
         setTripData({...tripData,
             traveler:selectedTraveler
-        })
+        }) 
     }, [selectedTraveler])
 
     useEffect(()=>{
