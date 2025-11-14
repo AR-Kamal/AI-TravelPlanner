@@ -1,11 +1,11 @@
-import { useNavigation, useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ToastAndroid } from 'react-native';
-import { Colors } from '../../../constants/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation, useRouter } from 'expo-router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './../../../configs/FirebaseConfig'
-//import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { Colors } from '../../../constants/Colors';
+import { auth } from './../../../configs/FirebaseConfig';
 
 
 export default function SignIn() {
@@ -35,6 +35,16 @@ export default function SignIn() {
     };
     checkUserSession();
   }, []); */
+  useEffect(() => {
+  const checkUserSession = async () => {
+    const userData = await AsyncStorage.getItem('user');
+    if (userData) {
+      router.replace('/(tabs)/mytrip');
+    }
+  };
+
+  checkUserSession();
+}, []);
 
 
   const onSignIn=()=>{
@@ -45,11 +55,15 @@ export default function SignIn() {
         return;
       }
     signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
+  .then(async(userCredential) => {
     // Signed in 
     const user = userCredential.user;
+
+    await AsyncStorage.setItem('user', JSON.stringify(user));
+
     router.replace('/mytrip')
     console.log(user)
+    ToastAndroid.show('Successfuly Sign In', ToastAndroid.LONG)
     // ...
   })
   .catch((error) => {
@@ -67,7 +81,7 @@ export default function SignIn() {
     }
     else
     {
-      ToastAndroid.show('Successfuly Sign In', ToastAndroid.LONG)
+      return;
     }
   });
   }

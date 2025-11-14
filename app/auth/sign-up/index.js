@@ -3,8 +3,8 @@ import { useNavigation, useRouter } from 'expo-router';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { auth, db } from '../../../configs/FirebaseConfig';
 import { Colors } from '../../../constants/Colors';
-import { auth } from '../../../configs/FirebaseConfig';
 
 export default function SignUp() {
   const navigation=useNavigation();
@@ -21,14 +21,14 @@ export default function SignUp() {
     })
   }, [])
 
-  const OnCreateAccount=()=>{
+  const OnCreateAccount=async()=>{
 
     if(!email||!password||!fullName)
     {
       ToastAndroid.show("Please Enter all Details", ToastAndroid.LONG);
       return;
     }
-    createUserWithEmailAndPassword(auth, email, password)
+    /* createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
@@ -41,7 +41,33 @@ export default function SignUp() {
     const errorMessage = error.message;
     console.log(errorMessage,errorCode);
     // ..
-  });
+  }); */
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Save fullName to Firestore
+      await setDoc(doc(db, "Users", user.uid), {
+        fullName: fullName,
+        email: email,
+        createdAt: new Date(),
+      });
+
+      ToastAndroid.show("Account Created Successfully!", ToastAndroid.LONG);
+
+      router.replace('/(tabs)/home');  // better navigation
+
+    } catch (error) {
+      console.log(error);
+
+      if (error.code === 'auth/email-already-in-use') {
+        ToastAndroid.show("Email already in use", ToastAndroid.LONG);
+      } else if (error.code === 'auth/weak-password') {
+        ToastAndroid.show("Password must be at least 6 characters", ToastAndroid.LONG);
+      } else {
+        ToastAndroid.show("Failed to create account", ToastAndroid.LONG);
+      }
+    }
   }
   return (
     <View style={{

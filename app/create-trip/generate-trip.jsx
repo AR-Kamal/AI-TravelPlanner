@@ -13,11 +13,10 @@ export default function GenerateTrip() {
     const {tripData,setTripData}=useContext(CreateTripContext);
     const [loading,setLoading]=useState(false);
     const router=useRouter();
-    
 
     useEffect(()=>{
-        tripData && GenerateAiTrip()
-    },[tripData])
+        GenerateAiTrip()
+    },[])
 
     const GenerateAiTrip=async()=>{
 
@@ -34,63 +33,23 @@ export default function GenerateTrip() {
         .replace('{totalDays}',tripData?.totalNoOfDays)
         .replace('{totalNight}',tripData?.totalNoOfDays - 1);
         console.log("FINAL PROMPT: ", FINAL_PROMPT)
-
-/*         let rawText;
-        try {
-            const result = await chatSession.sendMessage(FINAL_PROMPT);
-            rawText = result.response.text(); // <-- CORRECT: Get the raw string here
-            console.log("AI Response Text:", rawText);
-        } catch (error) {
-             console.error("Error during AI sendMessage:", error);
-             setLoading(false);
-             return;
-        }       
-        
-        // 4. Robust Parsing Logic (Fix for 'Unexpected end of input' error)
-        let tripResp;
-        
-        // Check for empty/null response string
-        if (!rawText || rawText.trim().length === 0) {
-            console.error("AI returned an empty or invalid response string.");
-            setLoading(false);
-            return; 
-        }
-
-        try {
-            // Clean up Markdown code fences (```json\n...\n```) from the start and end
-            const cleanText = rawText.trim().replace(/^```json\n|```$/g, '');
-            
-            tripResp = JSON.parse(cleanText); // <-- CORRECT: Parse the cleaned string
-            
-        } catch (e) {
-            console.error("Failed to parse AI response as JSON. Check AI format.", e);
-            console.log("Failed Raw AI Response:", rawText); 
-            setLoading(false);
-            return; 
-        }
-
- */
+    
         const result = await chatSession.sendMessage(FINAL_PROMPT);
         console.log(result.response.text());
         const tripResp=JSON.parse(result.response.text());
+     
+        /* console.log("EC: ",error.code);
+        console.log("EM: ",error.message); */
+
 
 
         const docId=Date.now().toString()
-
-        /* const result_=await setDoc(doc(db, "Usertrips", docId),{
-            userEmail: user?.email ?? user?.uid,
-            tripPlan:tripResp,
-            tripData:JSON.stringify(tripData),
-
-        }); */
-
-        // 5. Firestore Save (Fix for previous 'undefined' error)
 
         try {
             const result_=await setDoc(doc(db, "Usertrips", docId),{
                 // user?.email ?? user?.uid ensures a string is always saved
                 userEmail: user.email ?? user.uid, 
-                tripPlan:tripResp, // tripResp is now a valid object
+                tripPlan:tripResp,
                 tripData:JSON.stringify(tripData),
             });
             console.log("Trip saved successfully with ID:", docId);
