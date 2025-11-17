@@ -61,9 +61,9 @@ export default function SignIn() {
 
     await AsyncStorage.setItem('user', JSON.stringify(user));
 
-    router.replace('/mytrip')
+    router.replace('/home')
     console.log(user)
-    ToastAndroid.show('Successfuly Sign In', ToastAndroid.LONG)
+    ToastAndroid.show('Successfuly Sign In', ToastAndroid.SHORT)
     // ...
   })
   .catch((error) => {
@@ -88,7 +88,7 @@ export default function SignIn() {
   return (
     <View style={{
       padding:25,
-      paddingTop:40,
+      paddingTop:55,
       backgroundColor:Colors.WHITE,
       height:'100%'
     }}>

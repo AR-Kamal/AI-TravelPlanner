@@ -53,7 +53,7 @@ export default function SignUp() {
         createdAt: new Date(),
       });
 
-      ToastAndroid.show("Account Created Successfully!", ToastAndroid.LONG);
+      ToastAndroid.show("Account Created Successfully!", ToastAndroid.SHORT);
 
       router.replace('/(tabs)/home');  // better navigation
 
@@ -72,11 +72,11 @@ export default function SignUp() {
   return (
     <View style={{
       padding:25,
-      paddingTop:40,
+      paddingTop:55,
       backgroundColor:Colors.WHITE,
       height:'100%'
     }}>
-      <TouchableOpacity onPress={()=>router.back()}>
+      <TouchableOpacity onPress={()=>router.replace('auth/sign-in')}>
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
       <Text style={{

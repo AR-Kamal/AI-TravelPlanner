@@ -1,16 +1,18 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import StartNewTripCard from '../../componenets/MyTrips/StartNewTripCard';
 import { auth, db } from '../../configs/FirebaseConfig';
 import { Colors } from './../../constants/Colors';
 import UserTripList from '../../componenets/MyTrips/UserTripList';
+import { useRouter } from 'expo-router';
 
 export default function MyTrip() {
 
   const [userTrips, setUserTrips]=useState([]);
   const [loading,setLoading]=useState(false);
+  const router=useRouter();
   const user=auth.currentUser;
 
   useEffect(()=>{
@@ -33,11 +35,12 @@ export default function MyTrip() {
 
   }
   return (
-    <View style={{
+    <ScrollView contentContainerStyle={{
       padding:25,
       paddingTop:55,
+      paddingBottom: 25,
       backgroundColor:Colors.WHITE,
-      height:'100%'
+      minHeighteight:'100%'
     }}>
 
       
@@ -51,7 +54,6 @@ export default function MyTrip() {
           fontFamily:'outfit-bold',
           fontSize:35
         }}>My Trip</Text>
-        <Ionicons name="add-circle" size={50} color="black" />
       </View>
 
       {loading&&<ActivityIndicator size={'large'} color={Colors.PEIMARY}/>}
@@ -60,6 +62,6 @@ export default function MyTrip() {
         <StartNewTripCard/>:
         <UserTripList userTrips={userTrips}/>
       }
-    </View>
+    </ScrollView>
   )
 }
