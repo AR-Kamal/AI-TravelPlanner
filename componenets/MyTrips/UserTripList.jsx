@@ -1,8 +1,8 @@
+import { useRouter } from 'expo-router';
 import moment from 'moment';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Colors } from '../../constants/Colors';
 import UserTripCard from './UserTripCard';
-import { useRouter } from 'expo-router';
 
 export default function UserTripList({userTrips}) {
 

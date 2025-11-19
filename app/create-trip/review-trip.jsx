@@ -31,7 +31,7 @@ export default function ReviewTrip() {
         fontFamily:'outfit-bold',
         fontSize:35,
         marginTop:20
-      }}>Budget</Text>
+      }}>Review Your Trip</Text>
       <View style={{
         marginTop:20
       }}>

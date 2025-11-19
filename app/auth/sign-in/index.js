@@ -1,5 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Image } from 'expo-image';
 import { useNavigation, useRouter } from 'expo-router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useEffect, useState } from 'react';
@@ -87,11 +88,15 @@ export default function SignIn() {
   }
   return (
     <View style={{
-      padding:25,
-      paddingTop:55,
-      backgroundColor:Colors.WHITE,
-      height:'100%'
+      height:'100%',
+
     }}>
+        <Image source={require('./../../../assets/images/beach.jpg')}
+        style={{ 
+          width: '100%', 
+          height: '100%'
+        }}/>
+    <View style={styles.container}>
       <TouchableOpacity onPress={()=>router.push('/login')}>
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
@@ -163,6 +168,7 @@ export default function SignIn() {
           textAlign:'center',
         }}>Create Account</Text>
       </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -174,5 +180,23 @@ const styles = StyleSheet.create({
     borderRadius:15,
     borderColor: Colors.GRAY,
     fontFamily:'outfit'
-  }
+  },
+
+  container:{
+        backgroundColor: Colors.WHITE,
+        marginTop:-700,
+        height: '100%',
+        borderTopLeftRadius:30,
+        borderTopRightRadius:30,
+        padding: 25
+    },
+
+    button:{
+        padding:15,
+        backgroundColor:Colors.PEIMARY,
+        borderRadius:99,
+        marginTop:'25%'
+    }
 })
+
+
